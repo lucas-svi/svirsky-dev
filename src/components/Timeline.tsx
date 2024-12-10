@@ -11,8 +11,8 @@ type Project = {
   title: string;
   description: string;
   name: string;
-  demo: string;
-  code: string;
+  demo?: string;
+  code?: string;
   startDate: string;
   endDate?: string;
   tech: string[];
