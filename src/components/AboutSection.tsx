@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
+import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -23,7 +23,7 @@ export default function AboutSection() {
 
   useEffect(() => {
     let isMounted = true;
-
+    console.log(THREE.REVISION);
     let width = containerRef.current?.offsetWidth || window.innerWidth;
     let height = containerRef.current?.offsetHeight || window.innerHeight;
 
@@ -86,10 +86,6 @@ export default function AboutSection() {
       requestAnimationFrame(animate);
       const elapsedTime = clock.getElapsedTime()
       mixerRef.current?.setTime(elapsedTime);
-      //const delta = Math.min(clock.getDelta(), 0.016);
-      
-      //if (mixerRef.current) mixerRef.current.update(delta);
-
       renderer.render(scene, camera);
     };
     animate();
