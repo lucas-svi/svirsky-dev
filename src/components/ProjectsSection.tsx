@@ -18,7 +18,7 @@ export default function ProjectsSection() {
       title: "Group Lead / Lead Developer",
       description: "Decentralized, secure, and encrypted blockchain-based file sharing.",
       name: "FileZero",
-      demo: "https://svirsky.dev/filezero",
+      demo: "https://svirsky.dev/apps/filezero/",
       code: "https://github.com/lucas-svi/FileZero",
       startDate: "2024-10-01",
       endDate: "2024-12-06",
