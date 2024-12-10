@@ -24,8 +24,8 @@ export default function AboutSection() {
   useEffect(() => {
     let isMounted = true;
 
-    let width = containerRef.current?.clientWidth || window.innerWidth;
-    let height = containerRef.current?.clientHeight || window.innerHeight;
+    let width = containerRef.current?.offsetWidth || window.innerWidth;
+    let height = containerRef.current?.offsetHeight || window.innerHeight;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000);
@@ -95,8 +95,8 @@ export default function AboutSection() {
     animate();
 
     const handleResize = () => {
-      width = containerRef.current?.clientWidth || window.innerWidth;
-      height = containerRef.current?.clientHeight || window.innerHeight;
+      width = containerRef.current?.offsetWidth || window.innerWidth;
+      height = containerRef.current?.offsetHeight || window.innerHeight;
       renderer.setSize(width, height);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
