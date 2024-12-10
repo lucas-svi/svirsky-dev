@@ -95,10 +95,10 @@ export default function AboutSection() {
     animate();
 
     const handleResize = () => {
-      width = containerRef.current?.offsetWidth || window.innerWidth;
-      height = containerRef.current?.offsetHeight || window.innerHeight;
-      renderer.setSize(width, height);
-      camera.aspect = width / height;
+      const newWidth = containerRef.current?.offsetWidth || 1;
+      const newHeight = containerRef.current?.offsetHeight || 1;
+      renderer.setSize(newWidth, newHeight);
+      camera.aspect = newWidth / newHeight;
       camera.updateProjectionMatrix();
     };
     window.addEventListener("resize", handleResize);
