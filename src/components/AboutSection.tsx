@@ -3,11 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
-export default function HeroSection() {
+export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
   const [loadingDots, setLoadingDots] = useState('.');
-  let mixer = null;
+  const mixerRef = useRef<THREE.AnimationMixer | null>(null);
 
   useEffect(() => {
     const dots = ['.', '..', '...'];
@@ -19,7 +19,11 @@ export default function HeroSection() {
     return () => clearInterval(interval);
   }, []);
 
+  
+
   useEffect(() => {
+    let isMounted = true;
+
     let width = containerRef.current?.clientWidth || window.innerWidth;
     let height = containerRef.current?.clientHeight || window.innerHeight;
 
@@ -39,23 +43,22 @@ export default function HeroSection() {
     directionalLight.position.set(5, 10, 7.5);
     scene.add(directionalLight);
 
-    let loadedModel = null;
-
     const loader = new FBXLoader();
     loader.load(
       '/dance.fbx',
       (object) => {
+        if (!isMounted) return;
+
         object.scale.set(1, 1, 1);
         object.position.set(0, 0, 0);
         scene.add(object);
-        loadedModel = object;
         setIsModelLoaded(true);
 
-        mixer = new THREE.AnimationMixer(object);
-        
+        mixerRef.current = new THREE.AnimationMixer(object);
+
         if (object.animations && object.animations.length > 0) {
           object.animations.forEach((clip) => {
-            const action = mixer.clipAction(clip);
+            const action = mixerRef.current!.clipAction(clip);
             action.play();
           });
         }
@@ -82,9 +85,9 @@ export default function HeroSection() {
     const animate = () => {
       requestAnimationFrame(animate);
 
-      const delta = clock.getDelta();
+      const delta = Math.min(clock.getDelta(), 0.016);
       
-      if (mixer) mixer.update(delta);
+      if (mixerRef.current) mixerRef.current.update(delta);
 
       renderer.render(scene, camera);
     };
@@ -100,6 +103,7 @@ export default function HeroSection() {
     window.addEventListener("resize", handleResize);
 
     return () => {
+      isMounted = false;
       window.removeEventListener("resize", handleResize);
 
       scene.traverse((object) => {
@@ -118,6 +122,11 @@ export default function HeroSection() {
       }
 
       renderer.dispose();
+
+      if (mixerRef.current) {
+        mixerRef.current.stopAllAction();
+        mixerRef.current = null;
+      }
     };
   }, []);
 
@@ -129,8 +138,8 @@ export default function HeroSection() {
 
       <div className="w-full md:w-1/2 flex flex-col justify-center items-start">
         {!isModelLoaded ? (
-          <div className="text-2xl text-gray-300">
-            Loading{loadingDots}
+          <div className="text-2xl font-bold text-white-300">
+            {loadingDots}
           </div>
         ) : (
             <div className="flex flex-col items-start">
