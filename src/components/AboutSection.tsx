@@ -84,10 +84,11 @@ export default function AboutSection() {
     const clock = new THREE.Clock();
     const animate = () => {
       requestAnimationFrame(animate);
-
-      const delta = Math.min(clock.getDelta(), 0.016);
+      const elapsedTime = clock.getElapsedTime()
+      mixerRef.current?.setTime(elapsedTime);
+      //const delta = Math.min(clock.getDelta(), 0.016);
       
-      if (mixerRef.current) mixerRef.current.update(delta);
+      //if (mixerRef.current) mixerRef.current.update(delta);
 
       renderer.render(scene, camera);
     };
