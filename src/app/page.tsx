@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from 'react'
 import PageTransition from '@/components/PageTransition'
 import HeroSection from '@/components/HeroSection'
 import AboutSection from '@/components/AboutSection'

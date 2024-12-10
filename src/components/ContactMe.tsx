@@ -53,7 +53,7 @@ export default function ContactMe() {
         <div className="bg-white bg-opacity-10 p-8 rounded-3xl shadow-xl">
           <h2 className="text-4xl font-bold text-white mb-6">Contact Me</h2>
           <p className="text-gray-200 mb-8">
-            Have a question, want to work together, or just want to say hi? Drop me a message and I'll get back to you as soon as possible!
+            Have a question, want to work together, or just want to say hi? Drop me a message and I&apos;ll get back to you as soon as possible!
           </p>
 
           <form onSubmit={handleSubmit} className="space-y-6">
@@ -118,9 +118,9 @@ export default function ContactMe() {
         </div>
 
         <div className="flex flex-col justify-center items-center text-center space-y-6">
-          <h2 className="text-4xl font-bold">Let's Connect</h2>
+          <h2 className="text-4xl font-bold">Let&apos;s Connect</h2>
           <p className="text-gray-200">
-            Feel free to reach out to me on any of these platforms. I'd love to hear from you!
+            Feel free to reach out to me on any of these platforms. I&apos;d love to hear from you!
           </p>
 
           <div className="flex justify-center space-x-8 mt-8">

@@ -23,8 +23,8 @@ export default function AboutSection() {
 
   useEffect(() => {
     let isMounted = true;
-    let width = containerRef.current?.offsetWidth || window.innerWidth;
-    let height = containerRef.current?.offsetHeight || window.innerHeight;
+    const width = containerRef.current?.offsetWidth || window.innerWidth;
+    const height = containerRef.current?.offsetHeight || window.innerHeight;
     
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000);
