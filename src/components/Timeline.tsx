@@ -7,6 +7,8 @@ import StarIcon from '@mui/icons-material/Star';
 import PersonIcon from '@mui/icons-material/Person';
 import { Chip } from '@mui/material';
 
+type Category = 'personal' | 'school' | 'work';
+
 type Project = {
   title: string;
   description: string;
@@ -16,13 +18,13 @@ type Project = {
   startDate: string;
   endDate?: string;
   tech: string[];
-  category: 'school' | 'work' | 'personal';
+  category: Category;
 };
 
 type Milestone = {
   date: string;
   title: string;
-  category: string;
+  category?: Category;
 };
 
 type Event = {
@@ -34,14 +36,14 @@ type Event = {
   endDate?: string;
   dateForSorting: string;
   tech?: string[];
-  category?: 'school' | 'work' | 'personal';
+  category?: Category;
 };
 
 export function Timeline({ projects, milestones }: { projects: Project[]; milestones: Milestone[] }) {
   const present = new Date().toISOString().slice(0,10);
   const events: Event[] = [
     ...projects.map(p => ({
-      type: 'project',
+      type: 'project' as const,
       title: p.title,
       subtitle: p.name,
       description: p.description,
@@ -52,10 +54,10 @@ export function Timeline({ projects, milestones }: { projects: Project[]; milest
       category: p.category
     })),
     ...milestones.map(m => ({
-      type: 'milestone',
+      type: 'milestone' as const,
       title: m.title,
       dateForSorting: m.date,
-      category: m.category
+      category: m.category ?? 'personal'
     }))
   ].sort((a,b) => new Date(b.dateForSorting).valueOf() - new Date(a.dateForSorting).valueOf());
 

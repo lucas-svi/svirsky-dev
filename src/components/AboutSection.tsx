@@ -103,12 +103,13 @@ export default function AboutSection() {
       window.removeEventListener("resize", handleResize);
 
       scene.traverse((object) => {
-        if (object.isMesh) {
-          object.geometry.dispose();
-          if (Array.isArray(object.material)) {
-            object.material.forEach((material) => material.dispose());
+        const mesh = object as THREE.Mesh;
+        if (mesh.isMesh) {
+          mesh.geometry.dispose();
+          if (Array.isArray(mesh.material)) {
+            mesh.material.forEach((material) => material.dispose());
           } else {
-            object.material.dispose();
+            mesh.material.dispose();
           }
         }
       });

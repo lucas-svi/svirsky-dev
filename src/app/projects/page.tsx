@@ -2,7 +2,28 @@ import ProjectCard from '@/components/ProjectCard';
 import {Timeline} from '@/components/Timeline';
 
 export default function Projects() {
-  const projects = [
+  
+  type Category = 'personal' | 'school' | 'work';
+
+  type Project = {
+    title: string;
+    description: string;
+    name: string;
+    code?: string;
+    startDate: string;
+    endDate?: string;
+    tech: string[];
+    category: Category;
+    demo?: string;
+  };
+
+  type Milestone = {
+    date: string;
+    title: string;
+    category?: Category;
+  }
+
+  const projects: Project[] = [
     {
       title: "Group Lead / Lead Developer",
       description: "Custom course scheduler based on your interests for WesHack 2024",
@@ -67,7 +88,7 @@ export default function Projects() {
     },
   ];
 
-  const milestones = [
+  const milestones: Milestone[] = [
     {
       date: '2022-06-01',
       title: 'Scaled Novoline to 15,000 active users and surpassed $300k in annual revenue',
@@ -82,7 +103,7 @@ export default function Projects() {
       title: 'Secured approval for my custom-designed major — "Artificial Business" — blending technology, AI, and business strategy',
       category: "school"
     }
-  ]
+  ];
 
   return (
     <section>
