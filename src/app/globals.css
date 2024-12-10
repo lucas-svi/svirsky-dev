@@ -2,20 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+body {
+  @apply bg-gradient-to-r from-gradientStart to-gradientEnd text-white;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+.btn-primary {
+  @apply bg-blue-500 text-white font-bold py-2 px-4 rounded hover:bg-blue-700 transition-colors;
+}
+
+.btn-secondary {
+  @apply bg-gray-500 text-white font-bold py-2 px-4 rounded hover:bg-gray-700 transition-colors;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 20ch; }
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+.typing {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #fff;
+  animation: typing 2s steps(20, end), blink 0.75s step-end infinite;
+}
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+.fade-in-up {
+  animation: fadeInUp 1.5s ease forwards;
+}
+
+html {
+  scroll-behavior: smooth;
 }
