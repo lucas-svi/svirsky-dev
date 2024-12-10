@@ -25,8 +25,7 @@ export default function AboutSection() {
     let isMounted = true;
     let width = containerRef.current?.offsetWidth || window.innerWidth;
     let height = containerRef.current?.offsetHeight || window.innerHeight;
-    console.log("Width:", width);
-    console.log("Height:", height);
+    
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(35, width / height, 0.1, 1000);
     camera.position.set(0, 2, 15);
