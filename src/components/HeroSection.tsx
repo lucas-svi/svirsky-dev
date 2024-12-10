@@ -55,7 +55,6 @@ export default function HeroSection() {
       mesh.rotation.set(-1.5, 0, -2);
       scene.add(mesh);
 
-      // Model fully loaded
       setIsModelLoaded(true);
 
       const boundingBox = new THREE.Box3().setFromObject(mesh);
