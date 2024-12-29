@@ -79,7 +79,7 @@ export default function Projects() {
       title: "Backend Developer",
       description: "Created a seat-notification system for Wesleyan's student app",
       name: "OurCampus",
-      demo: "https://www.instagram.com/ourcampus_wes/",
+      demo: "https://play.google.com/store/apps/details?id=dev.davebaraka.ourcampus&hl=en_US",
       code: "https://github.com/OurCampusWes",
       startDate: "2022-10-01",
       endDate: "2023-01-01",
