@@ -9,6 +9,7 @@ export default function HeroSection() {
   const rotationSpeedRef = useRef(0.001);
   const [isModelLoaded, setIsModelLoaded] = useState(false);
   const [loadingDots, setLoadingDots] = useState('.');
+  const [modelError, setModelError] = useState(false);
   let timeoutId: number | null = null;
 
   useEffect(() => {
@@ -43,28 +44,46 @@ export default function HeroSection() {
     dracoLoader.setDecoderPath("https://www.gstatic.com/draco/v1/decoders/");
     let mesh: THREE.Mesh | null = null;
 
-    dracoLoader.load("bubblegum_david.drc", (geometry) => {
-      geometry.computeVertexNormals();
-      geometry.center();
-      const material = new THREE.MeshStandardMaterial({
-        color: 0xffc0cb,
-        metalness: 0.4,
-        roughness: 0.6
-      });
-      mesh = new THREE.Mesh(geometry, material);
-      mesh.rotation.set(-1.5, 0, -2);
-      scene.add(mesh);
+    const handleError = (error: any) => {
+      console.error("Error loading model:", error);
+      setModelError(true);
+    };
 
-      setIsModelLoaded(true);
+    try {
+      dracoLoader.load(
+        "bubblegum_david.drc",
+        (geometry) => {
+          try {
+            geometry.computeVertexNormals();
+            geometry.center();
+            const material = new THREE.MeshStandardMaterial({
+              color: 0xffc0cb,
+              metalness: 0.4,
+              roughness: 0.6
+            });
+            mesh = new THREE.Mesh(geometry, material);
+            mesh.rotation.set(-1.5, 0, -2);
+            scene.add(mesh);
 
-      const boundingBox = new THREE.Box3().setFromObject(mesh);
-      const size = boundingBox.getSize(new THREE.Vector3());
-      const maxDimension = Math.max(size.x, size.y, size.z);
-      const fov = camera.fov * (Math.PI / 180);
-      const distance = maxDimension / (2 * Math.tan(fov / 2));
-      camera.position.set(0, 0, distance * 1.5);
-      camera.lookAt(new THREE.Vector3(0, 0, 0));
-    });
+            setIsModelLoaded(true);
+
+            const boundingBox = new THREE.Box3().setFromObject(mesh);
+            const size = boundingBox.getSize(new THREE.Vector3());
+            const maxDimension = Math.max(size.x, size.y, size.z);
+            const fov = camera.fov * (Math.PI / 180);
+            const distance = maxDimension / (2 * Math.tan(fov / 2));
+            camera.position.set(0, 0, distance * 1.5);
+            camera.lookAt(new THREE.Vector3(0, 0, 0));
+          } catch (innerError) {
+            handleError(innerError);
+          }
+        },
+        undefined,
+        handleError
+      );
+    } catch (outerError) {
+      handleError(outerError);
+    }
 
     const animate = () => {
       requestAnimationFrame(animate);
@@ -108,9 +127,13 @@ export default function HeroSection() {
       <div ref={containerRef} className="absolute inset-0 z-0"></div>
 
       <div className="absolute inset-0 z-10 flex flex-col items-center justify-center pointer-events-none">
-        {!isModelLoaded ? (
+        {!isModelLoaded && !modelError ? (
           <div className="text-2xl font-bold text-white-300">
             {loadingDots}
+          </div>
+        ) : modelError ? (
+          <div className="text-2xl font-bold text-red-400">
+            Unable to load 3D model.
           </div>
         ) : (
           <div className="flex flex-col items-center fade-in-up pointer-events-auto">
