@@ -31,7 +31,6 @@ body {
   overflow: hidden;
   border-right: 3px solid #fff;
   animation: typing 2s steps(24, end), blink 0.75s step-end infinite;
-  font-family: monospace;
 }
 
 @keyframes fadeInUp {
